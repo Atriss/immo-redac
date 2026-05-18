@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Générateur d'annonces immo — par Gilles MAROUN</title>
+  <meta name="description" content="Générez des annonces immobilières professionnelles en quelques secondes grâce à l'IA Claude." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- HEADER -->
+    <header class="site-header">
+      <h1>🏠 Générateur d'annonces immo</h1>
+      <p class="subtitle">Remplis le formulaire — Claude rédige une annonce professionnelle en quelques secondes</p>
+    </header>
+
+    <!-- MAIN FORM -->
+    <main class="main-content">
+
+      <!-- SECTION 1 : INFORMATIONS DU BIEN -->
+      <section class="card" id="section-bien">
+        <div class="card-header">
+          <span class="card-icon">📋</span>
+          <h2>Informations du bien</h2>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="typeBien">TYPE DE BIEN</label>
+            <select id="typeBien">
+              <option value="Appartement">Appartement</option>
+              <option value="Maison">Maison / Villa</option>
+              <option value="Studio">Studio</option>
+              <option value="Loft">Loft</option>
+              <option value="Duplex">Duplex / Triplex</option>
+              <option value="Maison de ville">Maison de ville</option>
+              <option value="Mas provençal">Mas provençal</option>
+              <option value="Chalet">Chalet</option>
+              <option value="Local commercial">Local commercial</option>
+              <option value="Bureau">Bureau</option>
+              <option value="Terrain">Terrain</option>
+              <option value="Immeuble">Immeuble</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="transaction">TRANSACTION</label>
+            <select id="transaction">
+              <option value="Vente">Vente</option>
+              <option value="Location">Location</option>
+              <option value="Location meublée">Location meublée</option>
+              <option value="Location saisonnière">Location saisonnière</option>
+              <option value="Viager">Viager</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group--small">
+            <label for="surface">SURFACE (M²)</label>
+            <input type="number" id="surface" placeholder="ex : 75" min="1" />
+          </div>
+
+          <div class="form-group form-group--small">
+            <label for="pieces">NB DE PIÈCES</label>
+            <input type="number" id="pieces" placeholder="ex : 3" min="1" />
+          </div>
+
+          <div class="form-group form-group--small">
+            <label for="prix">PRIX (€)</label>
+            <input type="number" id="prix" placeholder="ex : 280000" min="0" />
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="localisation">LOCALISATION</label>
+            <input type="text" id="localisation" placeholder="ex : Cannes, quartier Californie, proche mer" />
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="pointsForts">POINTS FORTS <span class="label-hint">(séparés par des virgules)</span></label>
+            <input type="text" id="pointsForts" placeholder="ex : terrasse, vue mer, parking, lumineux, rénové" />
+          </div>
+
+        </div>
+      </section>
+
+      <!-- SECTION 2 : STYLE -->
+      <section class="card" id="section-style">
+        <div class="card-header">
+          <span class="card-icon">🎨</span>
+          <h2>Style de l'annonce</h2>
+        </div>
+
+        <div class="form-grid">
+
+          <div class="form-group">
+            <label for="ton">TON</label>
+            <select id="ton">
+              <option value="Professionnel & accrocheur">Professionnel &amp; accrocheur</option>
+              <option value="Luxe & prestige">Luxe &amp; prestige</option>
+              <option value="Chaleureux & familial">Chaleureux &amp; familial</option>
+              <option value="Direct & factuel">Direct &amp; factuel</option>
+              <option value="Narratif & storytelling">Narratif &amp; storytelling</option>
+              <option value="Minimaliste & épuré">Minimaliste &amp; épuré</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="plateforme">PLATEFORME CIBLE</label>
+            <select id="plateforme">
+              <option value="SeLoger / Leboncoin">SeLoger / Leboncoin</option>
+              <option value="PAP.fr">PAP.fr</option>
+              <option value="Bien'ici">Bien'ici</option>
+              <option value="Logic-Immo">Logic-Immo</option>
+              <option value="Century 21 / Orpi">Century 21 / Orpi</option>
+              <option value="Airbnb / Booking">Airbnb / Booking</option>
+              <option value="LinkedIn (immobilier pro)">LinkedIn (immobilier pro)</option>
+              <option value="Site web agence">Site web agence</option>
+            </select>
+          </div>
+
+          <div class="form-group form-group--full">
+            <label for="infosCompl">INFORMATIONS COMPLÉMENTAIRES <span class="label-hint">(optionnel)</span></label>
+            <textarea id="infosCompl" rows="3" placeholder="ex : copropriété de standing, charges 180€/mois, disponible immédiatement, DPE B..."></textarea>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- BOUTON GÉNÉRER -->
+      <button class="btn-generate" id="btnGenerate" onclick="generateAd()">
+        <span class="btn-icon">✨</span>
+        <span class="btn-label">Générer l'annonce</span>
+      </button>
+
+      <!-- ZONE DE RÉSULTAT -->
+      <section class="card result-card" id="resultSection" style="display:none;">
+        <div class="card-header">
+          <span class="card-icon">📝</span>
+          <h2>Annonce générée</h2>
+          <div class="result-badges" id="resultBadges"></div>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading-state" id="loadingState">
+          <div class="spinner"></div>
+          <p class="loading-text" id="loadingText">Analyse du bien en cours…</p>
+        </div>
+
+        <!-- Résultat texte -->
+        <div class="result-body" id="resultBody" style="display:none;">
+          <div class="result-title" id="resultTitle"></div>
+          <div class="result-text" id="resultText"></div>
+
+          <div class="result-actions">
+            <button class="btn-action btn-copy" onclick="copyAd()">
+              <span>📋</span> Copier l'annonce
+            </button>
+            <button class="btn-action btn-regen" onclick="generateAd()">
+              <span>🔄</span> Régénérer
+            </button>
+            <button class="btn-action btn-variant" onclick="generateVariant()">
+              <span>⚡</span> Autre variation
+            </button>
+          </div>
+
+          <!-- SEO -->
+          <div class="seo-section" id="seoSection" style="display:none;">
+            <div class="seo-header">🔍 Mots-clés SEO suggérés</div>
+            <div class="seo-tags" id="seoTags"></div>
+            <div class="seo-meta-label">Méta-description</div>
+            <div class="seo-meta-text" id="seoMeta"></div>
+          </div>
+        </div>
+
+        <!-- Error -->
+        <div class="error-state" id="errorState" style="display:none;">
+          <p class="error-msg" id="errorMsg"></p>
+          <button class="btn-action btn-regen" onclick="generateAd()">Réessayer</button>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <p>Propulsé par <strong>Claude</strong> · Anthropic — Outil développé par <strong>Gilles MAROUN</strong></p>
+    </footer>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
